@@ -12,7 +12,7 @@ type TMyListPageProps = {
 export const MyListPage = ({films}: TMyListPageProps) => {
   const [filmId, setFilmId] = useState<number | null>(null);
 
-  const onMouseOver = (id: number) => {
+  const handleMouseOver = (id: number) => {
     setFilmId(id);
   };
   return (
@@ -30,7 +30,7 @@ export const MyListPage = ({films}: TMyListPageProps) => {
 
             <div className='catalog__films-list'>
               <ItemList items={films}
-                renderItem={(item: TFilm) => <FilmCard film={item} key={item.id} handleMouseOver={onMouseOver} />}
+                renderItem={(item: TFilm) => <FilmCard film={item} key={item.id} onMouseOver={handleMouseOver} />}
               />
             </div>
           </section>

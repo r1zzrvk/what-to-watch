@@ -516,6 +516,13 @@ main {
       flex-wrap: wrap; }
 
 .catalog__genres-item {
+  display: block;
+  color: #DFCF77;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 15px;
+  -webkit-transition: font-weight;
+  transition: font-weight;
   margin-right: 20px;
   margin-bottom: 20px; }
   .catalog__genres-item--active .catalog__genres-link {

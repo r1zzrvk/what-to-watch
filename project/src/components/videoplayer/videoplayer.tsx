@@ -15,7 +15,10 @@ export const Videoplayer = ({ video, previewImage, isPlaying }: TVideoplayer) =>
     }
 
     if (isPlaying) {
-      videoRef.current.play();
+      setTimeout(() => {
+        videoRef.current?.play();
+      }, 1000);
+
       return;
     }
 

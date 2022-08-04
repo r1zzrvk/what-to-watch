@@ -5,10 +5,10 @@ import { Videoplayer } from '../videoplayer/videoplayer';
 
 type TFilmCardProps = {
   film: TFilm,
-  handleMouseOver: (id: number) => void,
+  onMouseOver: (id: number) => void,
 };
 
-export const FilmCard = ({ film, handleMouseOver }: TFilmCardProps) => {
+export const FilmCard = ({ film, onMouseOver }: TFilmCardProps) => {
   const { name, previewImage, id, previewVideoLink } = film;
   const [isPlaying, setIsPlaying] = useState(false);
   const navigate = useNavigate();
@@ -18,11 +18,9 @@ export const FilmCard = ({ film, handleMouseOver }: TFilmCardProps) => {
   };
 
   const handleHover = () => {
-    setTimeout(() => {
-      setIsPlaying(true);
-    }, 1000);
+    setIsPlaying(true);
 
-    handleMouseOver(id);
+    onMouseOver(id);
   };
 
   const handleHoverLeave = () => {
