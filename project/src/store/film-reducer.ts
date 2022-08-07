@@ -21,12 +21,6 @@ export const filmReducer = createSlice({
     changeFilters(state, action: PayloadAction<string>) {
       state.genre = action.payload;
     },
-    setFilms(state, action) {
-      state.films = action.payload;
-    },
-    setFetching(state, action) {
-      state.films = action.payload;
-    }
   },
   extraReducers(builder) {
     builder
@@ -40,4 +34,4 @@ export const filmReducer = createSlice({
   }
 });
 
-export const { changeFilters, setFilms, setFetching } = filmReducer.actions;
+export const { changeFilters } = filmReducer.actions;
