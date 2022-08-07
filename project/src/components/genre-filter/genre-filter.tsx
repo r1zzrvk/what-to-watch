@@ -1,31 +1,33 @@
 import { NavLink } from 'react-router-dom';
-import { GENRES } from '../../constants/filter';
-import { useAppDispatch } from '../../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { changeFilters } from '../../store/film-reducer';
+import { TFilm } from '../../types/film';
+import { genreGenerator } from '../../utils/genres';
 
-type TGenre = {
-  title: string
+type TGenreFilterProps = {
+  films: TFilm[]
 }
 
-export const GenreFilter = () => {
+export const GenreFilter = ({ films }: TGenreFilterProps) => {
   const dispatch = useAppDispatch();
-
-  const handleClick = ({ title }: TGenre): void => {
-    dispatch(changeFilters(title));
+  const currentGenre = useAppSelector((state) => state.film.genre);
+  const genres = genreGenerator(films);
+  const handleClick = (genre: string) => {
+    dispatch(changeFilters(genre));
   };
 
   return (
     <ul className='catalog__genres-list'>
-      {GENRES.map((genre: TGenre, i) => (
+      {genres.map((genre) => (
         <li
-          key={genre.title}
-          className='catalog__genres-item'
+          key={genre}
+          className={`catalog__genres-item ${currentGenre === genre && 'catalog__genres-item--active'}`}
         >
           <NavLink
             to=''
             className='catalog__genres-link'
             onClick={() => handleClick(genre)}
-          >{genre.title}
+          >{genre}
           </NavLink>
         </li>
       ))}
