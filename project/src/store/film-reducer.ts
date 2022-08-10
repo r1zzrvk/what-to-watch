@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TFilm } from '../types/film';
-import { fetchFilms } from './actions';
+import { fetchFilm, fetchFilms } from './api-actions';
 
 type TFilmState = {
   films: TFilm[]
   genre: string
   isLoading: boolean
+  film: TFilm | null
 }
 
 const initialState: TFilmState = {
   films: [],
   genre: 'All genres',
-  isLoading: false
+  isLoading: false,
+  film: null,
 };
 
 export const filmReducer = createSlice({
@@ -29,6 +31,13 @@ export const filmReducer = createSlice({
       })
       .addCase(fetchFilms.fulfilled, (state, action) => {
         state.films = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchFilm.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchFilm.fulfilled, (state, action) => {
+        state.film = action.payload;
         state.isLoading = false;
       });
   }

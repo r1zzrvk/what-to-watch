@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FilmCard } from '../../components/film-card/film-card';
 import { ItemList } from '../../components/item-list/item-list';
-import { Logo } from '../../components/logo/logo';
-import { UserBlock } from '../../components/user-block/user-block';
+import { Logo } from '../../components/ui/logo/logo';
+import { UserBlock } from '../../components/ui/user-block/user-block';
 import { TFilm } from '../../types/film';
 
 type TMyListPageProps = {
