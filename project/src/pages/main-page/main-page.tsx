@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilmCard } from '../../components/film-card/film-card';
 import { GenreFilter } from '../../components/genre-filter/genre-filter';
