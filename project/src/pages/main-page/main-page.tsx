@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilmCard } from '../../components/film-card/film-card';
 import { GenreFilter } from '../../components/genre-filter/genre-filter';
@@ -68,44 +68,11 @@ export const MainPage = ({ films }: TMainPageProps) => {
       <div className='page-content'>
         <section className='catalog'>
           <h2 className='catalog__title visually-hidden'>Catalog</h2>
-
-          <ul className='catalog__genres-list'>
-            <li className='catalog__genres-item catalog__genres-item--active'>
-              <a href='#' className='catalog__genres-link'>All genres</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Comedies</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Crime</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Documentary</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Dramas</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Horror</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Kids & Family</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Romance</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Sci-Fi</a>
-            </li>
-            <li className='catalog__genres-item'>
-              <a href='#' className='catalog__genres-link'>Thrillers</a>
-            </li>
-          </ul>
-
+          <GenreFilter films={films} />
           <div className='catalog__films-list'>
-            <ItemList items={films}
-              renderItem={(item: TFilm) => <FilmCard film={item} key={item.id} handleMouseOver={onMouseOver} />}
-            />
+            {isLoading
+              ? <Loader />
+              : <ItemList items={filtredFilms} renderItem={(item: TFilm) => (<FilmCard film={item} key={item.id} onMouseOver={handleMouseOver} />)} />}
           </div>
 
           <div className='catalog__more'>
@@ -121,7 +88,6 @@ export const MainPage = ({ films }: TMainPageProps) => {
               <span className='logo__letter logo__letter--3'>W</span>
             </a>
           </div>
-
           <div className='copyright'>
             <p>© 2019 What to watch Ltd.</p>
           </div>
