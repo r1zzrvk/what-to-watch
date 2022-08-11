@@ -1,12 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilmCard } from '../../components/film-card/film-card';
 import { GenreFilter } from '../../components/genre-filter/genre-filter';
-import { ItemList } from '../../components/item-list/item-list';
 import { Header } from '../../components/ui/header/header';
+import { ItemList } from '../../components/item-list/item-list';
 import { Loader } from '../../components/ui/loader/loader';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { TFilm } from '../../types/film';
+import { useFiltredFilms } from '../../hooks/filter-films';
 
 type TMainPageProps = {
   films: TFilm[]
@@ -14,20 +15,14 @@ type TMainPageProps = {
 
 export const MainPage = ({ films }: TMainPageProps) => {
   const { genre, isLoading } = useAppSelector((state) => state.film);
-  const [filmId, setFilmId] = useState<number | null>(null);
+  const [ , setFilmId] = useState<number | null>(null);
   const navigate = useNavigate();
+
   const handleMouseOver = (id: number) => {
     setFilmId(id);
   };
 
-  const filtredFilms = useMemo(() => {
-    if (genre === 'All genres') {
-      return films;
-    }
-
-    return films.filter((film: TFilm) => film.genre === genre);
-
-  }, [genre, films]);
+  const filtredFilms = useFiltredFilms(genre, films);
 
   return (
     <div>
@@ -35,7 +30,7 @@ export const MainPage = ({ films }: TMainPageProps) => {
         <div className='film-card__bg'>
           <img src='img/bg-the-grand-budapest-hotel.jpg' alt='The Grand Budapest Hotel' />
         </div>
-        <h1 className='visually-hidden'>WTW {filmId}</h1>
+        <h1 className='visually-hidden'>WTW</h1>
         <Header />
         <div className='film-card__wrap'>
           <div className='film-card__info'>
