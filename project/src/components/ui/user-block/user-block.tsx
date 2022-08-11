@@ -13,7 +13,7 @@ export const UserBlock = () => {
 const AuthUser = () => {
   const dispatch = useAppDispatch();
   const { userData } = useAppSelector((state) => state.app);
-  const onLogoutClick = () => {
+  const handleLogoutClick = () => {
     dispatch(logOut());
   };
   return (
@@ -24,7 +24,7 @@ const AuthUser = () => {
         </div>
       </li>
       <li className='user-block__item'>
-        <Link to='' className='user-block__link' onClick={onLogoutClick}>
+        <Link to='' className='user-block__link' onClick={handleLogoutClick}>
           Sign out
         </Link>
       </li>

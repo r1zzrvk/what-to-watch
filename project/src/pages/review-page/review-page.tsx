@@ -1,6 +1,6 @@
-import { Logo } from '../../components/logo/logo';
 import { ReviewForm } from '../../components/review-form/review-form';
-import { UserBlock } from '../../components/user-block/user-block';
+import { Logo } from '../../components/ui/logo/logo';
+import { UserBlock } from '../../components/ui/user-block/user-block';
 
 export const ReviewPage = () => (
   <div>

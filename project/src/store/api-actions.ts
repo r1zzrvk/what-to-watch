@@ -18,8 +18,8 @@ export const fetchFilms = createAsyncThunk<TFilm[], undefined, {
     try {
       const { data } = await api.get<TFilm[]>('/films');
       return data;
-    } catch {
-      throw new Error('Something went wrong');
+    } catch (e) {
+      throw new Error(String(e));
     }
   }
 );
@@ -34,9 +34,9 @@ export const checkAuth = createAsyncThunk<void, undefined, {
     try {
       await api.get('/login');
       dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
-    } catch {
+    } catch (e) {
       dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
-      throw new Error('Unauthorized');
+      throw new Error(String(e));
     }
   }
 );
@@ -78,8 +78,8 @@ export const fetchFilm = createAsyncThunk<TFilm, string | undefined, {
     try {
       const { data } = await api.get<TFilm>(`/films/${id}`);
       return data;
-    } catch {
-      throw new Error('Something went wrong');
+    } catch (e) {
+      throw new Error(String(e));
     }
   },
 );

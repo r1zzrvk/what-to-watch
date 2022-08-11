@@ -2,9 +2,9 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilmCard } from '../../components/film-card/film-card';
 import { GenreFilter } from '../../components/genre-filter/genre-filter';
-import { Header } from '../../components/header/header';
 import { ItemList } from '../../components/item-list/item-list';
-import { Loader } from '../../components/loader/loader';
+import { Header } from '../../components/ui/header/header';
+import { Loader } from '../../components/ui/loader/loader';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { TFilm } from '../../types/film';
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Header } from '../../components/header/header';
+import { Header } from '../../components/ui/header/header';
 
 export const FilmPage = () => {
   const id = 1;
