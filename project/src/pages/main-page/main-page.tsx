@@ -1,26 +1,36 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilmCard } from '../../components/film-card/film-card';
-import { Header } from '../../components/header/header';
+import { GenreFilter } from '../../components/genre-filter/genre-filter';
+import { Header } from '../../components/ui/header/header';
 import { ItemList } from '../../components/item-list/item-list';
+import { Loader } from '../../components/ui/loader/loader';
+import { useAppSelector } from '../../hooks/redux-hooks';
 import { TFilm } from '../../types/film';
+import { useFiltredFilms } from '../../hooks/filter-films';
+
 type TMainPageProps = {
   films: TFilm[]
 };
 
 export const MainPage = ({ films }: TMainPageProps) => {
-  const [filmId, setFilmId] = useState<number | null>(null);
+  const { genre, isLoading } = useAppSelector((state) => state.film);
+  const [ , setFilmId] = useState<number | null>(null);
   const navigate = useNavigate();
-  const onMouseOver = (id: number) => {
+
+  const handleMouseOver = (id: number) => {
     setFilmId(id);
   };
+
+  const filtredFilms = useFiltredFilms(genre, films);
+
   return (
     <div>
       <section className='film-card'>
         <div className='film-card__bg'>
           <img src='img/bg-the-grand-budapest-hotel.jpg' alt='The Grand Budapest Hotel' />
         </div>
-        <h1 className='visually-hidden'>WTW {filmId}</h1>
+        <h1 className='visually-hidden'>WTW</h1>
         <Header />
         <div className='film-card__wrap'>
           <div className='film-card__info'>
