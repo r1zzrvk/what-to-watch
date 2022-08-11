@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FilmCard } from '../../components/film-card/film-card';
 import { GenreFilter } from '../../components/genre-filter/genre-filter';
 import { Header } from '../../components/header/header';
 import { ItemList } from '../../components/item-list/item-list';
+import { Loader } from '../../components/loader/loader';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { TFilm } from '../../types/film';
 
@@ -12,20 +13,19 @@ type TMainPageProps = {
 };
 
 export const MainPage = ({ films }: TMainPageProps) => {
-  const { genre } = useAppSelector((state) => state.film);
-  const [filtred, setFiltred] = useState<TFilm[]>([]);
+  const { genre, isLoading } = useAppSelector((state) => state.film);
   const [filmId, setFilmId] = useState<number | null>(null);
   const navigate = useNavigate();
   const handleMouseOver = (id: number) => {
     setFilmId(id);
   };
 
-  useEffect(() => {
-    setFiltred(films.filter((film: TFilm) => film.genre === genre));
-
+  const filtredFilms = useMemo(() => {
     if (genre === 'All genres') {
-      setFiltred(films);
+      return films;
     }
+
+    return films.filter((film: TFilm) => film.genre === genre);
 
   }, [genre, films]);
 
@@ -73,12 +73,11 @@ export const MainPage = ({ films }: TMainPageProps) => {
       <div className='page-content'>
         <section className='catalog'>
           <h2 className='catalog__title visually-hidden'>Catalog</h2>
-          <GenreFilter />
+          <GenreFilter films={films} />
           <div className='catalog__films-list'>
-            <ItemList
-              items={filtred}
-              renderItem={(item: TFilm) => <FilmCard film={item} key={item.id} onMouseOver={handleMouseOver} />}
-            />
+            {isLoading
+              ? <Loader />
+              : <ItemList items={filtredFilms} renderItem={(item: TFilm) => (<FilmCard film={item} key={item.id} onMouseOver={handleMouseOver} />)} />}
           </div>
 
           <div className='catalog__more'>
