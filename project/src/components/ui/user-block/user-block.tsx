@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AuthorizationStatus } from '../../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux-hooks';
-import { logOut } from '../../../store/api-actions';
+import { logOut } from '../../../store/actions/api-actions';
 
 export const UserBlock = () => {
   const { authorizationStatus } = useAppSelector((state) => state.app);

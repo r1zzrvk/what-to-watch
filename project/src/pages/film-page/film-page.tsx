@@ -5,16 +5,19 @@ import { FilmTabs } from '../../components/film-tabs/film-tabs';
 import { ItemList } from '../../components/item-list/item-list';
 import { Footer } from '../../components/ui/footer/footer';
 import { Header } from '../../components/ui/header/header';
-import { useFiltredFilms } from '../../hooks/filter-films';
+import { AuthorizationStatus } from '../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchFilm } from '../../store/api-actions';
+import { fetchFilm, fetchSimilar } from '../../store/actions/api-actions';
 import { TFilm } from '../../types/film';
 
 export const FilmPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { film, films } = useAppSelector((state) => state.film);
+  const { film, similarFilms } = useAppSelector((state) => state.film);
+  const { authorizationStatus } = useAppSelector((state) => state.app);
   const [, setFilmId] = useState<number | null>(null);
+
+  const filtredSimilarFilms = similarFilms.slice(0, 4).filter((item) => item.id !== film?.id);
 
   const handleMouseOver = (id: number) => {
     setFilmId(id);
@@ -22,10 +25,9 @@ export const FilmPage = () => {
 
   useEffect(() => {
     dispatch(fetchFilm(params.id));
+    dispatch(fetchSimilar(params.id));
   }, [params.id, dispatch]);
 
-  const filtredFilms = useFiltredFilms(String(film?.genre), films)
-    .filter((item) => item.id !== film?.id);
   return (
     <div>
       <section className="film-card film-card--full">
@@ -57,7 +59,9 @@ export const FilmPage = () => {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${params.id}/review`} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.AUTH
+                  ? <Link to={`/films/${params.id}/review`} className="btn film-card__button">Add review</Link>
+                  : null}
               </div>
 
             </div>
@@ -77,11 +81,9 @@ export const FilmPage = () => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            {
-              <ItemList items={filtredFilms.slice(0, 4)} renderItem={(item: TFilm) =>
-                (<FilmCard film={item} key={item.id} onMouseOver={handleMouseOver} />)}
-              />
-            }
+            <ItemList items={filtredSimilarFilms} renderItem={(item: TFilm) =>
+              (<FilmCard film={item} key={item.id} onMouseOver={handleMouseOver} />)}
+            />
           </div>
         </section>
         <Footer />

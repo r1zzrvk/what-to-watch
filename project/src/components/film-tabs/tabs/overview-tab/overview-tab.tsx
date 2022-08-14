@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../../../hooks/redux-hooks';
+import { getRatingStatus } from '../../../../utils/common';
 
 export const OverviewTab = () => {
   const film = useAppSelector((state) => state.film.film);
@@ -7,7 +8,7 @@ export const OverviewTab = () => {
       <div className="film-rating">
         <div className="film-rating__score">{film?.rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">Very good</span>
+          <span className="film-rating__level">{getRatingStatus(Number(film?.rating))}</span>
           <span className="film-rating__count">{film?.scoresCount}</span>
         </p>
       </div>
@@ -15,6 +16,8 @@ export const OverviewTab = () => {
       <div className="film-card__text">
         {film?.description}
       </div>
+      <p className="film-card__director"><strong>Director: {film?.director}</strong></p>
+      <p className="film-card__starring"><strong>Starring: {film?.starring.slice(0, 3).join(', ')} and others</strong></p>
     </>
   );
 };

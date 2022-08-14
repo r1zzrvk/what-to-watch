@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../constants/auth';
-import { TUserData } from '../types/user';
+import { AuthorizationStatus } from '../../constants/auth';
+import { TUserData } from '../../types/user';
 
 type TAppState = {
   authorizationStatus: AuthorizationStatus

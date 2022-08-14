@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux-hooks';
+import { getUser } from '../../api/user';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { FilmPage } from '../../pages/film-page/film-page';
 import { LoginPage } from '../../pages/login-page/login-page';
 import { MainPage } from '../../pages/main-page/main-page';
@@ -7,12 +9,18 @@ import { MyListPage } from '../../pages/my-list-page/my-list-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { ReviewPage } from '../../pages/review-page/review-page';
+import { setUserData } from '../../store/reducers/app-reducer';
 import browserHistory from '../../utils/browser-history';
 import { HistoryRouter } from '../history-router/history-router';
 import { PrivateRoute } from '../private-route/private-route';
 
 export const App = () => {
   const { films } = useAppSelector((state) => state.film);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setUserData(getUser()));
+  }, [dispatch]);
+
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
