@@ -6,7 +6,7 @@ import { OverviewTab } from './tabs/overview-tab/overview-tab';
 import { ReviewsTab } from './tabs/reviews-tab/reviews-tab';
 
 export const FilmTabs = () => {
-  const [active, setActive] = useState<string>('Overview');
+  const [active, setActive] = useState<typeof TABS[number]>('Overview');
   const changeTab = () => {
     switch (active) {
       case 'Overview':
@@ -20,7 +20,7 @@ export const FilmTabs = () => {
     }
   };
 
-  const handleClick = (tab: string) => {
+  const handleClick = (tab: typeof TABS[number]) => {
     setActive(tab);
   };
 

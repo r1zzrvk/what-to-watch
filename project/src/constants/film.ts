@@ -16,3 +16,6 @@ export const RATING = [
   9,
   10,
 ];
+
+export const PAGE_COUNT = 8;
+
