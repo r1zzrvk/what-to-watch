@@ -17,3 +17,21 @@ export type TFilm = {
     released: number
     isFavorite: boolean
 };
+
+export type TReview = {
+    comment: string
+    date: string
+    id: number
+    rating: number
+    user: TReviewUser
+}
+
+export type TReviewUser = {
+    id: number
+    name: string
+}
+
+export type TPostReview = {
+    comment: string
+    rating: number
+}

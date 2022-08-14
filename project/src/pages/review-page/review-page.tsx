@@ -23,7 +23,7 @@ export const ReviewPage = () => {
                   <Link to={`/films/${film?.id}`} className="breadcrumbs__link">{film?.name}</Link>
                 </li>
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Add review</a>
+                  <Link to={''}className="breadcrumbs__link">Add review</Link>
                 </li>
               </ul>
             </nav>
@@ -34,7 +34,7 @@ export const ReviewPage = () => {
           </div>
         </div>
         <div className="add-review">
-          <ReviewForm />
+          <ReviewForm id={film?.id}/>
         </div>
       </section>
     </div>

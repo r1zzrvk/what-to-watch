@@ -15,7 +15,7 @@ type TMainPageProps = {
 
 export const MainPage = ({ films }: TMainPageProps) => {
   const { genre, isLoading } = useAppSelector((state) => state.film);
-  const [ , setFilmId] = useState<number | null>(null);
+  const [, setFilmId] = useState<number | null>(null);
   const navigate = useNavigate();
 
   const handleMouseOver = (id: number) => {
