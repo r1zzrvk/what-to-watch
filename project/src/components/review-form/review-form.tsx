@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { RATING } from '../../constants/film';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import { useValidateForm } from '../../hooks/validate-form';
-import { addReview } from '../../store/actions/api-actions';
+import { addReview } from '../../store/api-actions/review';
 import { ItemList } from '../item-list/item-list';
 import { RatingStar } from '../rating-star/rating-star';
 
@@ -15,7 +15,7 @@ export const ReviewForm = ({ id }: TReviewFormProps) => {
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState(true);
-  const validated = useValidateForm(comment);
+  const isValid = useValidateForm(comment);
 
   const onReviewInputChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(target.value);
@@ -28,17 +28,17 @@ export const ReviewForm = ({ id }: TReviewFormProps) => {
   };
 
   useEffect(() => {
-    if (rating !== 0 && validated) {
+    if (rating !== 0 && isValid) {
       setIsDisabled(false);
     }
-  }, [rating, validated]);
+  }, [rating, isValid]);
 
   return (
     <form onSubmit={handleSubmit} className="add-review__htmlForm">
       <div className="rating">
         <div className="rating__stars">
           <ItemList items={RATING} renderItem={(item: number) =>
-            (<RatingStar rating={item} key={item} setRating={setRating} />)}
+            (<RatingStar rating={item} key={item} onRatingChange={setRating} />)}
           />
         </div>
       </div>

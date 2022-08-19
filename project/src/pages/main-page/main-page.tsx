@@ -1,17 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { GenreFilter } from '../../components/genre-filter/genre-filter';
 import { Header } from '../../components/ui/header/header';
-import { TFilm } from '../../types/film';
 import { Footer } from '../../components/ui/footer/footer';
 import { ListWithPagination } from '../../components/list-with-pagination/list-with-pagination';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { getFilms } from '../../store/selectors/film';
 
-type TMainPageProps = {
-  films: TFilm[]
-};
-
-export const MainPage = ({ films }: TMainPageProps) => {
+export const MainPage = () => {
   const navigate = useNavigate();
-
+  const films = useAppSelector(getFilms);
   return (
     <div>
       <section className='film-card'>
@@ -60,7 +57,7 @@ export const MainPage = ({ films }: TMainPageProps) => {
         <section className='catalog'>
           <h2 className='catalog__title visually-hidden'>Catalog</h2>
           <GenreFilter films={films} />
-          <ListWithPagination films={films}/>
+          {films.length > 0 ? <ListWithPagination films={films}/> : <div>No movies found</div>}
         </section>
         <Footer />
       </div>

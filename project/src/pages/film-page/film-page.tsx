@@ -5,16 +5,23 @@ import { FilmTabs } from '../../components/film-tabs/film-tabs';
 import { ItemList } from '../../components/item-list/item-list';
 import { Footer } from '../../components/ui/footer/footer';
 import { Header } from '../../components/ui/header/header';
+import { Loader } from '../../components/ui/loader/loader';
 import { AuthorizationStatus } from '../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchFilm, fetchSimilar } from '../../store/actions/api-actions';
+import { fetchFilm } from '../../store/api-actions/film';
+import { fetchSimilarFilms } from '../../store/api-actions/review';
+import { getAuthorizationStatus } from '../../store/selectors/app';
+import { getFilm, getFilmLoading, getSimilarFilms } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
 
 export const FilmPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { film, similarFilms } = useAppSelector((state) => state.film);
-  const { authorizationStatus } = useAppSelector((state) => state.app);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const isLoading = useAppSelector(getFilmLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const [, setFilmId] = useState<number | null>(null);
 
   const filtredSimilarFilms = similarFilms.slice(0, 4).filter((item) => item.id !== film?.id);
@@ -25,24 +32,29 @@ export const FilmPage = () => {
 
   useEffect(() => {
     dispatch(fetchFilm(params.id));
-    dispatch(fetchSimilar(params.id));
+    dispatch(fetchSimilarFilms(params.id));
   }, [params.id, dispatch]);
+
+  if(!film) {
+    return null;
+  }
 
   return (
     <div>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film?.backgroundImage} alt={film?.name} />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <Header />
+          {isLoading && <Loader />}
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film?.name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film?.genre}</span>
-                <span className="film-card__year">{film?.released}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -71,7 +83,7 @@ export const FilmPage = () => {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film?.posterImage} alt={film?.name} width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
             <FilmTabs />
           </div>

@@ -17,5 +17,5 @@ export const RATING = [
   10,
 ];
 
-export const PAGE_COUNT = 8;
+export const ITEMS_PER_PAGE = 8;
 

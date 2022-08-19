@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { FilmCard } from '../../components/film-card/film-card';
 import { ItemList } from '../../components/item-list/item-list';
+import { Footer } from '../../components/ui/footer/footer';
 import { Logo } from '../../components/ui/logo/logo';
 import { UserBlock } from '../../components/ui/user-block/user-block';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { getFilms } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
 
-type TMyListPageProps = {
-  films: TFilm[]
-}
-
-export const MyListPage = ({films}: TMyListPageProps) => {
+export const MyListPage = () => {
   const [filmId, setFilmId] = useState<number | null>(null);
-
+  const films = useAppSelector(getFilms);
   const handleMouseOver = (id: number) => {
     setFilmId(id);
   };
@@ -34,20 +33,7 @@ export const MyListPage = ({films}: TMyListPageProps) => {
               />
             </div>
           </section>
-
-          <footer className='page-footer'>
-            <div className='logo'>
-              <a href='main.html' className='logo__link logo__link--light'>
-                <span className='logo__letter logo__letter--1'>W</span>
-                <span className='logo__letter logo__letter--2'>T</span>
-                <span className='logo__letter logo__letter--3'>W</span>
-              </a>
-            </div>
-
-            <div className='copyright'>
-              <p>© 2019 What to watch Ltd.</p>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </div>
     </div>

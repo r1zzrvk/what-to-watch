@@ -1,2 +1,4 @@
+import './loader.css';
+
 export const Loader = () =>
-  <h1>Идет загрузка...</h1>;
+  <div className="loader"></div>;

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { changeFilters } from '../../store/reducers/film-reducer';
+import { getGenre } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
 import { generateGenres } from '../../utils/genres';
 
@@ -10,7 +11,7 @@ type TGenreFilterProps = {
 
 export const GenreFilter = ({ films }: TGenreFilterProps) => {
   const dispatch = useAppDispatch();
-  const currentGenre = useAppSelector((state) => state.film.genre);
+  const currentGenre = useAppSelector(getGenre);
   const genres = generateGenres(films);
   const handleClick = (genre: string) => {
     dispatch(changeFilters(genre));
