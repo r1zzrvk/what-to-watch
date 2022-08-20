@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { RATING } from '../../constants/film';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import { useValidateForm } from '../../hooks/validate-form';
@@ -14,8 +14,9 @@ export const ReviewForm = ({ id }: TReviewFormProps) => {
   const dispatch = useAppDispatch();
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
-  const [isDisabled, setIsDisabled] = useState(true);
   const isValid = useValidateForm(comment);
+  const isDisabled = rating === 0 || !isValid;
+
 
   const onReviewInputChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(target.value);
@@ -26,12 +27,6 @@ export const ReviewForm = ({ id }: TReviewFormProps) => {
       dispatch(addReview(({ rating, comment, id })));
     }
   };
-
-  useEffect(() => {
-    if (rating !== 0 && isValid) {
-      setIsDisabled(false);
-    }
-  }, [rating, isValid]);
 
   return (
     <form onSubmit={handleSubmit} className="add-review__htmlForm">
