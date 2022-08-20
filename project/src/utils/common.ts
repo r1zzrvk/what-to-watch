@@ -1,10 +1,10 @@
 import { format, parseISO } from 'date-fns';
 
-export const convertMinutes = (mins: number, isPlayer: boolean) => {
-  const hour = Math.trunc(mins / 60);
+export const convertMinutes = (mins: number) => {
+  const hours = Math.trunc(mins / 60);
   const minutes = mins % 60;
 
-  return isPlayer ? `${hour}:${minutes}` : `${hour}h ${minutes}m`;
+  return {hours, minutes};
 };
 
 export const getRatingStatus = (rating: number) => {

@@ -1,0 +1,16 @@
+.loader {
+  position: fixed;
+  left: 48.5%;
+  top: 70%;
+  border: 8px solid #C9B37E; /* Light grey */
+  border-top: 8px solid #fd612ead; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,8 +1,10 @@
 import { useAppSelector } from '../../../../hooks/redux-hooks';
+import { getFilm } from '../../../../store/selectors/film';
 import { convertMinutes } from '../../../../utils/common';
 
 export const DetailsTab = () => {
-  const film = useAppSelector((state) => state.film.film);
+  const film = useAppSelector(getFilm);
+  const runTime = convertMinutes(Number(film?.runTime));
   return (
     <div>
       <div className="film-card__text film-card__row">
@@ -22,7 +24,7 @@ export const DetailsTab = () => {
         <div className="film-card__text-col">
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Run Time</strong>
-            <span className="film-card__details-value">{convertMinutes(Number(film?.runTime), false)}</span>
+            <span className="film-card__details-value">{`${runTime.hours}h ${runTime.minutes}m`}</span>
           </p>
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Genre</strong>

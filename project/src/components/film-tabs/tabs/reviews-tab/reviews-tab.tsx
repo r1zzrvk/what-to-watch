@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux-hooks';
-import { fetchReviews } from '../../../../store/actions/api-actions';
+import { fetchReviews } from '../../../../store/api-actions/review';
+import { getReviews } from '../../../../store/selectors/review';
 import { TReview } from '../../../../types/film';
 import { ItemList } from '../../../item-list/item-list';
 import { ReviewCard } from '../../../review-card/review-card';
 
 export const ReviewsTab = () => {
-  const { reviews } = useAppSelector((state) => state.review);
+  const reviews = useAppSelector(getReviews);
   const dispatch = useAppDispatch();
   const params = useParams();
   useEffect(() => {

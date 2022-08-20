@@ -30,8 +30,3 @@ export type TReviewUser = {
     id: number
     name: string
 }
-
-export type TPostReview = {
-    comment: string
-    rating: number
-}

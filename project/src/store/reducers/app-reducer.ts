@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getUser } from '../../api/user';
 import { AuthorizationStatus } from '../../constants/auth';
 import { TUserData } from '../../types/user';
 
@@ -9,7 +10,7 @@ type TAppState = {
 
 const initialState: TAppState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
-  userData: null,
+  userData: getUser(),
 };
 
 export const appReducer = createSlice({

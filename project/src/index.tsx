@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { App } from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { checkAuth, fetchFilms } from './store/actions/api-actions';
+import { checkAuth } from './store/api-actions/app';
+import { fetchFilms } from './store/api-actions/film';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

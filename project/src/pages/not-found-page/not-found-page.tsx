@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import './not-found-page.css';
 
 export const NotFoundPage = () => {
   const navigate = useNavigate();
@@ -7,9 +8,13 @@ export const NotFoundPage = () => {
     navigate('/');
   };
   return (
-    <div>
-      <h1>404 Not Found</h1>
-      <button onClick={handleClick}>Назад!</button>
+    <div className='wrapper'>
+      <div className='content'>
+        <h1>404</h1>
+        <h2>Oops, something went wrong</h2>
+        <p>You may want to head back to the homepage.</p>
+        <button className='button' onClick={handleClick}>RETURN HOME</button>
+      </div>
     </div>
   );
 };
