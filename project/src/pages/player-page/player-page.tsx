@@ -1,36 +1,55 @@
-export const PlayerPage = () => (
-  <div>
-    <div className="player">
-      <video src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4" className="player__video" poster="img/player-poster.jpg"></video>
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { ExitButton } from '../../components/player-controls/exit-button/exit-button';
+import { FullscreenButton } from '../../components/player-controls/fullscreen-button/fullscreen-button';
+import { PlayButton } from '../../components/player-controls/play-button/play-button';
+import { ProgressBar } from '../../components/player-controls/progress-bar/progress-bar';
+import { Videoplayer } from '../../components/videoplayer/videoplayer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { fetchFilm } from '../../store/api-actions/film';
+import { getFilm } from '../../store/selectors/film';
 
-      <button type="button" className="player__exit">Exit</button>
+export const PlayerPage = () => {
+  const film = useAppSelector(getFilm);
+  const dispatch = useAppDispatch();
+  const params = useParams();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-      <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setProgress((videoRef.current.currentTime / videoRef.current.duration) * 100);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchFilm(params.id));
+  }, [params.id, dispatch]);
+
+  if (!film) {
+    return null;
+  }
+
+  return (
+    <div>
+      <div className="player">
+        <Videoplayer
+          src={film.videoLink}
+          poster={film.previewImage}
+          videoRef={videoRef}
+          onTimeUpdate={handleTimeUpdate}
+        />
+        <ExitButton />
+        <div className="player__controls">
+          <ProgressBar progress={progress} videoRef={videoRef} />
+          <div className="player__controls-row">
+            <PlayButton videoRef={videoRef} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+            <div className="player__name">{film.name}</div>
+            <FullscreenButton videoRef={videoRef} />
           </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
-
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">Transpotting</div>
-
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

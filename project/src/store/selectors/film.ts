@@ -13,3 +13,4 @@ export const getGenre = createSelector(getFilmState, (state) => state.genre);
 
 export const getSimilarFilms = createSelector(getFilmState, (state) => state.similarFilms);
 
+export const getPromoFilm = createSelector(getFilmState, (state) => state.promoFilm);
