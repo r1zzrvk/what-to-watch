@@ -23,7 +23,12 @@ export const App = () => (
       }
       />
       <Route path='/player/:id' element={<PlayerPage />} />
-      <Route path='/films/:id/review' element={<ReviewPage />} />
+      <Route path='/films/:id/review' element={
+        <PrivateRoute>
+          <ReviewPage />
+        </PrivateRoute>
+      }
+      />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   </HistoryRouter>

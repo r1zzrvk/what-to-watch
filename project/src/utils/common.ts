@@ -4,7 +4,31 @@ export const convertMinutes = (mins: number) => {
   const hours = Math.trunc(mins / 60);
   const minutes = mins % 60;
 
-  return {hours, minutes};
+  return { hours, minutes };
+};
+
+export const convertPlayerTime = (secs: number) => {
+  const minutes = Math.floor(secs / 60);
+  const hours = Math.floor(minutes / 60);
+  const seconds = Math.floor(secs % 60);
+
+  return { minutes, hours, seconds };
+};
+
+export const convertSingleDigit = (num: number) => {
+  if (num < 10) {
+    return `0${num}`;
+  } else {
+    return num;
+  }
+};
+
+export const playerTimeTemplate = (hours: number, mins: number, secs: number) => {
+  if (hours === 0) {
+    return `${convertSingleDigit(mins)}:${convertSingleDigit(secs)}`;
+  } else {
+    return `${convertSingleDigit(hours)}:${convertSingleDigit(mins)}:${convertSingleDigit(secs)}`;
+  }
 };
 
 export const getRatingStatus = (rating: number) => {

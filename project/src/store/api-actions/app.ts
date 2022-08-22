@@ -4,9 +4,10 @@ import { AppDispatch, RootState } from '..';
 import { dropToken, saveToken } from '../../api/token';
 import { AuthorizationStatus } from '../../constants/auth';
 import { TAuthData } from '../../types/auth';
+import { TFilm } from '../../types/film';
 import { TUserData } from '../../types/user';
 import { redirectToRoute } from '../actions/actions';
-import { setAuthorizationStatus, setUserData } from '../reducers/app-reducer';
+import { setAuthorizationStatus, setFavoriteFilms, setIsLoading, setUserData } from '../reducers/app-reducer';
 
 export const checkAuth = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -51,4 +52,39 @@ export const logOut = createAsyncThunk<void, undefined, {
     dropToken();
     dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
   },
+);
+
+export const fetchFavorites = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: RootState,
+  extra: AxiosInstance
+}>(
+  'app/fetchFavorites',
+  async (_arg, {dispatch, extra: api }) => {
+    try {
+      dispatch(setIsLoading(true));
+      const { data } = await api.get<TFilm[]>('/favorite');
+      dispatch(setFavoriteFilms(data));
+      dispatch(setIsLoading(false));
+    } catch (e) {
+      dispatch(setIsLoading(false));
+      throw new Error(String(e));
+    }
+  }
+);
+
+export const changeFavoriteFilmStatus = createAsyncThunk<void, {id: string, status: string},{
+  dispatch: AppDispatch,
+  state: RootState,
+  extra: AxiosInstance
+}>(
+  'app/changeFavoriteFilmStatus',
+  async ({id, status}, {dispatch, extra: api }) => {
+    try {
+      await api.post(`/favorite/${id}/${status}`);
+    } catch (e) {
+      dispatch(redirectToRoute('*'));
+      throw new Error(String(e));
+    }
+  }
 );

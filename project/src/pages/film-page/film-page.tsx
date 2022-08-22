@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { AddToFavorites } from '../../components/add-to-favorites/add-to-favorites';
 import { FilmCard } from '../../components/film-card/film-card';
 import { FilmTabs } from '../../components/film-tabs/film-tabs';
+import { GoToPlayer } from '../../components/go-to-player/go-to-player';
 import { ItemList } from '../../components/item-list/item-list';
 import { Footer } from '../../components/ui/footer/footer';
 import { Header } from '../../components/ui/header/header';
 import { Loader } from '../../components/ui/loader/loader';
-import { AuthorizationStatus } from '../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchFilm } from '../../store/api-actions/film';
-import { fetchSimilarFilms } from '../../store/api-actions/review';
-import { getAuthorizationStatus } from '../../store/selectors/app';
+import { fetchFilm, fetchSimilarFilms } from '../../store/api-actions/film';
 import { getFilm, getFilmLoading, getSimilarFilms } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
 
@@ -20,7 +19,6 @@ export const FilmPage = () => {
   const film = useAppSelector(getFilm);
   const similarFilms = useAppSelector(getSimilarFilms);
   const isLoading = useAppSelector(getFilmLoading);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [, setFilmId] = useState<number | null>(null);
 
@@ -35,7 +33,7 @@ export const FilmPage = () => {
     dispatch(fetchSimilarFilms(params.id));
   }, [params.id, dispatch]);
 
-  if(!film) {
+  if (!film) {
     return null;
   }
 
@@ -56,30 +54,14 @@ export const FilmPage = () => {
                 <span className="film-card__genre">{film.genre}</span>
                 <span className="film-card__year">{film.released}</span>
               </p>
-
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                {authorizationStatus === AuthorizationStatus.AUTH
-                  ? <Link to={`/films/${params.id}/review`} className="btn film-card__button">Add review</Link>
-                  : null}
+                <GoToPlayer id={String(params.id)} />
+                <AddToFavorites id={String(params.id)} />
+                <Link to={`/films/${params.id}/review`} className="btn film-card__button">Add review</Link>
               </div>
-
             </div>
           </div>
         </div>
-
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">

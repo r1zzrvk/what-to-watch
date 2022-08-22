@@ -7,9 +7,9 @@ import { OverviewTab } from './tabs/overview-tab/overview-tab';
 import { ReviewsTab } from './tabs/reviews-tab/reviews-tab';
 
 export const FilmTabs = () => {
-  const [active, setActive] = useState<typeof TABS[number]>('Overview');
+  const [activeTab, setActiveTab] = useState<typeof TABS[number]>('Overview');
   const changeTab = () => {
-    switch (active) {
+    switch (activeTab) {
       case 'Overview':
         return <OverviewTab />;
       case 'Details':
@@ -21,15 +21,15 @@ export const FilmTabs = () => {
     }
   };
 
-  const onClick = (tab: typeof TABS[number]) => {
-    setActive(tab);
+  const handleClick = (tab: typeof TABS[number]) => {
+    setActiveTab(tab);
   };
 
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <ItemList items={TABS} renderItem={(tab) => <Tab key={tab} tab={tab} active={active} handleClick={onClick}/>}/>
+          <ItemList items={TABS} renderItem={(tab) => <Tab key={tab} tab={tab} activeTab={activeTab} onClick={handleClick}/>}/>
         </ul>
       </nav>
       {changeTab()}

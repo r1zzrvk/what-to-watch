@@ -32,3 +32,33 @@ export const fetchFilm = createAsyncThunk<TFilm, string | undefined, {
     }
   },
 );
+
+export const fetchSimilarFilms = createAsyncThunk<TFilm[], string | undefined, {
+  state: RootState,
+  extra: AxiosInstance
+}>(
+  'film/fetchSimilarFilms',
+  async (id, { extra: api }) => {
+    try {
+      const { data } = await api.get<TFilm[]>(`/films/${id}/similar`);
+      return data;
+    } catch (e) {
+      throw new Error(String(e));
+    }
+  },
+);
+
+export const fetchPromoFilm = createAsyncThunk<TFilm, undefined, {
+  state: RootState,
+  extra: AxiosInstance
+}>(
+  'film/fetchPromoFilm',
+  async (_arg, { extra: api }) => {
+    try {
+      const { data } = await api.get<TFilm>('/promo');
+      return data;
+    } catch (e) {
+      throw new Error(String(e));
+    }
+  },
+);

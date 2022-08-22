@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux-hooks';
 import { logOut } from '../../../store/api-actions/app';
@@ -13,14 +13,20 @@ export const UserBlock = () => {
 
 const AuthUser = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { userData } = useAppSelector((state) => state.app);
+
+  const handleProfileClick = () => {
+    navigate('/mylist');
+  };
+
   const handleLogoutClick = () => {
     dispatch(logOut());
   };
   return (
     <ul className='user-block'>
       <li className='user-block__item'>
-        <div className='user-block__avatar'>
+        <div className='user-block__avatar' onClick={handleProfileClick}>
           <img src={userData?.avatarUrl} alt='User avatar' width='63' height='63' />
         </div>
       </li>
