@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux-hooks';
-import { fetchReviews } from '../../../../store/api-actions/review';
+import { fetchReviews } from '../../../../store/api-actions/review-actions/review';
 import { getReviews } from '../../../../store/selectors/review';
 import { TReview } from '../../../../types/film';
 import { ItemList } from '../../../item-list/item-list';

@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TReview } from '../../types/film';
-import { fetchReviews } from '../api-actions/review';
-
-type TReviewState = {
-  isLoading: boolean
-  reviews: TReview[]
-}
+import { TReviewState } from '../../../types/state';
+import { fetchReviews } from '../../api-actions/review-actions/review';
 
 const initialState: TReviewState = {
   isLoading: false,

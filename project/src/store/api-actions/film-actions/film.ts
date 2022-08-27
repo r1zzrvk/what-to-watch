@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { RootState } from '..';
-import { TFilm } from '../../types/film';
+import { RootState } from '../..';
+import { TFilm } from '../../../types/film';
 
 export const fetchFilms = createAsyncThunk<TFilm[], undefined, {
   state: RootState,

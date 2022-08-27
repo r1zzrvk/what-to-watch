@@ -1,19 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUser } from '../../api/user';
-import { AuthorizationStatus } from '../../constants/auth';
-import { TFilm } from '../../types/film';
-import { TUserData } from '../../types/user';
-
-type TAppState = {
-  authorizationStatus: AuthorizationStatus
-  userData: TUserData | null;
-  isLoading: boolean
-  favoriteFilms: TFilm[]
-}
+import { AuthorizationStatus } from '../../../constants/auth';
+import { TFilm } from '../../../types/film';
+import { TAppState } from '../../../types/state';
+import { TUserData } from '../../../types/user';
 
 const initialState: TAppState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
-  userData: getUser(),
+  userData: null,
   favoriteFilms: [],
   isLoading: false,
 };

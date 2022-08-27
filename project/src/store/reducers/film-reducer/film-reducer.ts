@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TFilm } from '../../types/film';
-import { fetchFilm, fetchFilms, fetchPromoFilm, fetchSimilarFilms } from '../api-actions/film';
-
-type TFilmState = {
-  films: TFilm[]
-  genre: string
-  isLoading: boolean
-  film: TFilm | null
-  similarFilms: TFilm[]
-  promoFilm: TFilm | null
-}
+import { TFilmState } from '../../../types/state';
+import { fetchFilm, fetchFilms, fetchPromoFilm, fetchSimilarFilms } from '../../api-actions/film-actions/film';
 
 const initialState: TFilmState = {
   films: [],

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { AppDispatch, RootState } from '..';
-import { TReview } from '../../types/film';
-import { redirectToRoute } from '../actions/actions';
+import { AppDispatch, RootState } from '../..';
+import { TReview } from '../../../types/film';
+import { redirectToRoute } from '../../actions/actions';
 
 export const fetchReviews = createAsyncThunk<TReview[], string | undefined, {
   dispatch: AppDispatch,
