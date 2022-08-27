@@ -6,6 +6,6 @@ describe('Component: Header', () => {
     render(
       <Header />
     );
-    expect(screen.getByText('Header')).toBeInTheDocument();
+    expect(screen.getByTestId('Header')).toBeInTheDocument();
   });
 });

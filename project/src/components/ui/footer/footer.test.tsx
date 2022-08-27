@@ -13,6 +13,6 @@ describe('Component: Footer', () => {
       </HistoryRouter>
     );
 
-    expect(screen.getByText('Footer')).toBeInTheDocument();
+    expect(screen.getByTestId('Footer')).toBeInTheDocument();
   });
 });

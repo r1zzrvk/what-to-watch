@@ -15,7 +15,7 @@ describe('Component: UserBlock', () => {
       </HistoryRouter>
     );
 
-    expect(screen.getByText('UserBlock')).toBeInTheDocument();
+    expect(screen.getByTestId('UserBlock')).toBeInTheDocument();
     expect(screen.getByText(user.avatarUrl)).toBeInTheDocument();
   });
 });

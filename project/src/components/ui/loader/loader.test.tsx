@@ -6,6 +6,6 @@ describe('Component: Loader', () => {
     render(
       <Loader />
     );
-    expect(screen.getByText('Loader')).toBeInTheDocument();
+    expect(screen.getByTestId('Loader')).toBeInTheDocument();
   });
 });
