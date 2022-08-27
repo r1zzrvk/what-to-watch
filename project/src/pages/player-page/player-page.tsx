@@ -6,7 +6,7 @@ import { PlayButton } from '../../components/player-controls/play-button/play-bu
 import { ProgressBar } from '../../components/player-controls/progress-bar/progress-bar';
 import { Videoplayer } from '../../components/videoplayer/videoplayer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchFilm } from '../../store/api-actions/film';
+import { fetchFilm } from '../../store/api-actions/film-actions/film';
 import { getFilm } from '../../store/selectors/film';
 
 export const PlayerPage = () => {

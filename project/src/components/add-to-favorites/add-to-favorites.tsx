@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { changeFavoriteFilmStatus, fetchFavorites } from '../../store/api-actions/app';
+import { changeFavoriteFilmStatus, fetchFavorites } from '../../store/api-actions/app-actions/app';
 import { getFavoriteFilms } from '../../store/selectors/app';
 
 type TAddToFavoritesProps = {

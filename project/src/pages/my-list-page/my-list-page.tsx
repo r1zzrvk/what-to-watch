@@ -5,7 +5,7 @@ import { Footer } from '../../components/ui/footer/footer';
 import { Logo } from '../../components/ui/logo/logo';
 import { UserBlock } from '../../components/ui/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchFavorites } from '../../store/api-actions/app';
+import { fetchFavorites } from '../../store/api-actions/app-actions/app';
 import { getFavoriteFilms } from '../../store/selectors/app';
 import { TFilm } from '../../types/film';
 
