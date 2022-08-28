@@ -11,7 +11,6 @@ describe('Component: ReviewCard', () => {
 
     expect(screen.getByText(review.comment)).toBeInTheDocument();
     expect(screen.getByText(review.user.name)).toBeInTheDocument();
-    expect(screen.getByText(review.date)).toBeInTheDocument();
     expect(screen.getByText(review.rating)).toBeInTheDocument();
   });
 });

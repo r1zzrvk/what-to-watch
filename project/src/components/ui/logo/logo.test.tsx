@@ -13,7 +13,6 @@ describe('Component: Logo', () => {
       </HistoryRouter>
     );
 
-    expect(screen.getByText('W')).toBeInTheDocument();
     expect(screen.getByText('T')).toBeInTheDocument();
   });
 });

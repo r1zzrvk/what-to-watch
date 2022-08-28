@@ -22,3 +22,9 @@ export type TReviewState = {
   isLoading: boolean
   reviews: TReview[]
 }
+
+export type TState = {
+  app: TAppState,
+  film: TFilmState,
+  review: TReviewState
+}

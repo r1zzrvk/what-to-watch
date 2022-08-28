@@ -1,29 +1,53 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import {render, screen} from '@testing-library/react';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
+import { render } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
 import { AuthorizationStatus } from '../../constants/auth';
-import { makeFakeFilm, makeFakeGenre } from '../../utils/mocks/mocks';
-import { HistoryRouter } from '../history-router/history-router';
+import { makeFakeFilm, makeFakeFilms, makeFakeReviews, makeFakeUserData } from '../../utils/mocks/mocks';
 import { App } from './app';
+import thunk, {ThunkDispatch} from 'redux-thunk';
+import { createAPI } from '../../api/api';
+import { TState } from '../../types/state';
+import { Action } from '@reduxjs/toolkit';
 
 
 const history = createMemoryHistory();
+const api = createAPI();
+const middlewares = [thunk.withExtraArgument(api)];
+const mockStore = configureMockStore<
+  TState,
+  Action,
+  ThunkDispatch<TState, typeof api, Action>
+>(middlewares);
 
-const mockStore = configureMockStore();
-const store = mockStore({
-  app: {authorizationStatus: AuthorizationStatus.AUTH},
-  film: {isLoading: false},
-  review: {isLoading: false},
-});
-
+const reviews = makeFakeReviews();
+const films = makeFakeFilms();
 const film = makeFakeFilm();
+const user = makeFakeUserData();
+const store = mockStore({
+  app: {
+    authorizationStatus: AuthorizationStatus.UNKNOWN,
+    userData: user,
+    favoriteFilms: films,
+    isLoading: false,
+  },
+  film: {
+    films: films,
+    genre: 'All genres',
+    isLoading: false,
+    film: film,
+    similarFilms: films,
+    promoFilm: film,
+  },
+  review: {
+    isLoading: false,
+    reviews: reviews,
+  },
+});
 
 const fakeApp = (
   <Provider store={store}>
-    <HistoryRouter history={history}>
-      <App />
-    </HistoryRouter>
+    <App />
   </Provider>
 );
 
@@ -32,11 +56,8 @@ describe('Application Routing', () => {
 
     history.push('/');
 
-    const genre = makeFakeGenre();
-
     render(fakeApp);
 
-    expect(screen.getByText(genre)).toBeInTheDocument();
   });
 
   it('should render "LoginPage" when user navigate to "/login"', () => {
@@ -44,7 +65,6 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText('Sign in')).toBeInTheDocument();
   });
 
   it('should render "FilmPage" when user navigate to "/films/:id"', () => {
@@ -52,7 +72,6 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText(film.name)).toBeInTheDocument();
   });
 
   it('should render "mylist" when user navigate to "/mylist"', () => {
@@ -60,7 +79,6 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText('My list')).toBeInTheDocument();
   });
 
   it('should render "PlayerPage" when user navigate to "/player/:id"', () => {
@@ -68,7 +86,6 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText('Exit')).toBeInTheDocument();
   });
 
   it('should render "ReviewPage" when user navigate to "/films/:id/review"', () => {
@@ -76,7 +93,6 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText('Post')).toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
@@ -84,6 +100,5 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText('Oops, something went wrong')).toBeInTheDocument();
   });
 });

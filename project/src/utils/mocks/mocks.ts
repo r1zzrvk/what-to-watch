@@ -43,7 +43,7 @@ export const makeFakeToken = () => datatype.string(16);
 
 export const makeFakeReview = (): TReview => ({
   comment: 'The editing is a mess, and the transitions of the plot or characters are rather strange. There is no narrative focus and the storytelling is unbalanced. I cannot really understand why such a bad movie received an overwhelming approval from the critics',
-  date: 'Thu Jun 14 2022 12:02:01 GMT+0700 (GMT+07:00)',
+  date: '2022-06-14T12:25:36.946Z',
   id: datatype.number(),
   rating: 6.1,
   user: {

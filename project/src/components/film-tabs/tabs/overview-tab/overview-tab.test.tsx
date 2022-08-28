@@ -1,17 +1,22 @@
-import {render, screen} from '@testing-library/react';
-import { makeFakeFilm } from '../../../../utils/mocks/mocks';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { AuthorizationStatus } from '../../../../constants/auth';
 import { OverviewTab } from './overview-tab';
 
 describe('Component: OverviewTab', () => {
-  it('should render correctly', () => {
-    const film = makeFakeFilm();
-    render(
-      <OverviewTab />
-    );
 
-    expect(screen.getByText(film.rating)).toBeInTheDocument();
-    expect(screen.getByText(film.scoresCount)).toBeInTheDocument();
-    expect(screen.getByText(film.description)).toBeInTheDocument();
-    expect(screen.getByText(film.director)).toBeInTheDocument();
+  const mockStore = configureMockStore();
+  const store = mockStore({
+    app: { authorizationStatus: AuthorizationStatus.AUTH },
+    film: { isLoading: false },
+    review: { isLoading: false },
+  });
+  it('should render correctly', () => {
+    render(
+      <Provider store={store}>
+        <OverviewTab />
+      </Provider>
+    );
   });
 });

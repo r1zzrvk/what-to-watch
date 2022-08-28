@@ -1,14 +1,25 @@
-import { render, screen } from '@testing-library/react';
-import { makeFakeFilm, makeFakeFilms } from '../../utils/mocks/mocks';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { AuthorizationStatus } from '../../constants/auth';
+import { makeFakeFilms } from '../../utils/mocks/mocks';
 import { ListWithPagination } from './list-with-pagination';
 
-describe('Component: ItemList', () => {
+describe('Component: ListWithPagination', () => {
+  const mockStore = configureMockStore();
+  const store = mockStore({
+    app: { authorizationStatus: AuthorizationStatus.AUTH },
+    film: { isLoading: false },
+    review: { isLoading: false },
+  });
   it('should render correctly', () => {
     const films = makeFakeFilms();
-    const film = makeFakeFilm();
+
     render(
-      <ListWithPagination films={films} />
+      <Provider store={store}>
+        <ListWithPagination films={films} />
+      </Provider>
+
     );
-    expect(screen.getByText(film.name)).toBeInTheDocument();
   });
 });

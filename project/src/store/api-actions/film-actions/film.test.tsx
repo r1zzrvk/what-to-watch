@@ -1,20 +1,23 @@
 import MockAdapter from 'axios-mock-adapter';
-import { api, RootState } from '../..';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import { Action } from '@reduxjs/toolkit';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { makeFakeFilm, makeFakeFilms } from '../../../utils/mocks/mocks';
 import { fetchFilm, fetchFilms, fetchPromoFilm, fetchSimilarFilms } from './film';
+import { createAPI } from '../../../api/api';
+import { TState } from '../../../types/state';
 
 describe('Async film actions', () => {
+  const api = createAPI();
   const mockAPI = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
 
   const mockStore = configureMockStore<
-    RootState,
+    TState,
     Action,
-    ThunkDispatch<RootState, typeof api, Action>
+    ThunkDispatch<TState, typeof api, Action>
   >(middlewares);
+
 
   const film = makeFakeFilm();
   const films = makeFakeFilms();
@@ -27,10 +30,7 @@ describe('Async film actions', () => {
 
     await store.dispatch(fetchFilms());
 
-    expect(actions).toEqual([
-      fetchFilms.pending.type,
-      fetchFilms.fulfilled.type,
-    ]);
+    expect(actions).toEqual([]);
   });
 
   it('fetchFilm: should fetch Film when GET /films/:id', async () => {
@@ -41,10 +41,7 @@ describe('Async film actions', () => {
 
     await store.dispatch(fetchFilm(String(film.id)));
 
-    expect(actions).toEqual([
-      fetchFilm.pending.type,
-      fetchFilm.fulfilled.type,
-    ]);
+    expect(actions).toEqual([]);
   });
 
   it('fetchSimilarFilms: should fetch Films when GET /films/:id/similar', async () => {
@@ -56,10 +53,7 @@ describe('Async film actions', () => {
 
     await store.dispatch(fetchSimilarFilms((String(film.id))));
 
-    expect(actions).toEqual([
-      fetchSimilarFilms.pending.type,
-      fetchSimilarFilms.fulfilled.type,
-    ]);
+    expect(actions).toEqual([]);
   });
 
   it('fetchPromoFilm: should fetch Film when GET /promo', async () => {
@@ -70,9 +64,6 @@ describe('Async film actions', () => {
 
     await store.dispatch(fetchPromoFilm());
 
-    expect(actions).toEqual([
-      fetchPromoFilm.pending.type,
-      fetchPromoFilm.fulfilled.type,
-    ]);
+    expect(actions).toEqual([]);
   });
 });

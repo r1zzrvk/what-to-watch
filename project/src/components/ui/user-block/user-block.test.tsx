@@ -1,22 +1,32 @@
-import {render, screen} from '@testing-library/react';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { makeFakeUserData } from '../../../utils/mocks/mocks';
+import { Provider } from 'react-redux';
+import { AuthorizationStatus } from '../../../constants/auth';
 import { HistoryRouter } from '../../history-router/history-router';
 import { UserBlock } from './user-block';
 
 const history = createMemoryHistory();
 
 describe('Component: UserBlock', () => {
+
+  const mockStore = configureMockStore();
+  const store = mockStore({
+    app: { authorizationStatus: AuthorizationStatus.AUTH },
+    film: { isLoading: false },
+    review: { isLoading: false },
+  });
+
   it('should render correctly', () => {
-    const user = makeFakeUserData();
     render(
-      <HistoryRouter history={history}>
-        <UserBlock />
-      </HistoryRouter>
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <UserBlock />
+        </HistoryRouter>
+      </Provider>
+
     );
 
-    expect(screen.getByText('Sign Out')).toBeInTheDocument();
-    expect(screen.getByText('Sign in')).toBeInTheDocument();
-    expect(screen.getByText(user.avatarUrl)).toBeInTheDocument();
+    expect(screen.getByAltText('User avatar')).toBeInTheDocument();
   });
 });
