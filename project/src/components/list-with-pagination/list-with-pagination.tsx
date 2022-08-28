@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { ITEMS_PER_PAGE } from '../../constants/film';
-import { useFiltredFilms } from '../../hooks/filter-films';
+import { useFiltredFilms } from '../../hooks/filter-films/filter-films';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { getFilmLoading, getGenre } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';

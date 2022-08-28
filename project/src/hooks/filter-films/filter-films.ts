@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { TFilm } from '../types/film';
+import { TFilm } from '../../types/film';
 
 export const useFiltredFilms = (genre: string, films: TFilm[]): TFilm[] => {
   const filtredFilms = useMemo(() => {
