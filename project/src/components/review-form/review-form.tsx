@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { AuthorizationStatus } from '../../constants/auth';
 import { RATING } from '../../constants/film';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { useValidateForm } from '../../hooks/validate-form';
+import { useValidateForm } from '../../hooks/validate-form/validate-form';
 import { addReview } from '../../store/api-actions/review-actions/review';
 import { getAuthorizationStatus } from '../../store/selectors/app';
 import { getReviewsLoading } from '../../store/selectors/review';
