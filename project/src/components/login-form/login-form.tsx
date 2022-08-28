@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks/redux-hooks';
-import { loginIn } from '../../store/api-actions/app';
+import { loginIn } from '../../store/api-actions/app-actions/app';
 import { TAuthData } from '../../types/auth';
 
 export const LoginForm = () => {

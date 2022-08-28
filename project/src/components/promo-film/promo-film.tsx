@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchPromoFilm } from '../../store/api-actions/film';
+import { fetchPromoFilm } from '../../store/api-actions/film-actions/film';
 import { getPromoFilm } from '../../store/selectors/film';
 import { AddToFavorites } from '../add-to-favorites/add-to-favorites';
 import { GoToPlayer } from '../go-to-player/go-to-player';

@@ -15,13 +15,7 @@ export const convertPlayerTime = (secs: number) => {
   return { minutes, hours, seconds };
 };
 
-export const convertSingleDigit = (num: number) => {
-  if (num < 10) {
-    return `0${num}`;
-  } else {
-    return num;
-  }
-};
+export const convertSingleDigit = (num: number) => String(num).padStart(2, '0');
 
 export const playerTimeTemplate = (hours: number, mins: number, secs: number) => {
   if (hours === 0) {

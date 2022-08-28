@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { AppDispatch, RootState } from '..';
-import { dropToken, saveToken } from '../../api/token';
-import { AuthorizationStatus } from '../../constants/auth';
-import { TAuthData } from '../../types/auth';
-import { TFilm } from '../../types/film';
-import { TUserData } from '../../types/user';
-import { redirectToRoute } from '../actions/actions';
-import { setAuthorizationStatus, setFavoriteFilms, setIsLoading, setUserData } from '../reducers/app-reducer';
+import { AppDispatch, RootState } from '../..';
+import { dropToken, saveToken } from '../../../api/token';
+import { AuthorizationStatus } from '../../../constants/auth';
+import { TAuthData } from '../../../types/auth';
+import { TFilm } from '../../../types/film';
+import { TUserData } from '../../../types/user';
+import { redirectToRoute } from '../../actions/actions';
+import { setAuthorizationStatus, setFavoriteFilms, setIsLoading, setUserData } from '../../reducers/app-reducer/app-reducer';
 
 export const checkAuth = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,

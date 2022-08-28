@@ -9,7 +9,7 @@ import { Footer } from '../../components/ui/footer/footer';
 import { Header } from '../../components/ui/header/header';
 import { Loader } from '../../components/ui/loader/loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { fetchFilm, fetchSimilarFilms } from '../../store/api-actions/film';
+import { fetchFilm, fetchSimilarFilms } from '../../store/api-actions/film-actions/film';
 import { getFilm, getFilmLoading, getSimilarFilms } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
 

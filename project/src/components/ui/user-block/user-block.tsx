@@ -1,8 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthorizationStatus } from '../../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux-hooks';
-import { logOut } from '../../../store/api-actions/app';
-import { getAuthorizationStatus } from '../../../store/selectors/app';
+import { logOut } from '../../../store/api-actions/app-actions/app';
+import { getAuthorizationStatus, getUserData } from '../../../store/selectors/app';
 
 export const UserBlock = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -13,12 +13,7 @@ export const UserBlock = () => {
 
 const AuthUser = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { userData } = useAppSelector((state) => state.app);
-
-  const handleProfileClick = () => {
-    navigate('/mylist');
-  };
+  const userData = useAppSelector(getUserData);
 
   const handleLogoutClick = () => {
     dispatch(logOut());
@@ -26,9 +21,11 @@ const AuthUser = () => {
   return (
     <ul className='user-block'>
       <li className='user-block__item'>
-        <div className='user-block__avatar' onClick={handleProfileClick}>
-          <img src={userData?.avatarUrl} alt='User avatar' width='63' height='63' />
-        </div>
+        <Link to='/mylist'>
+          <div className='user-block__avatar'>
+            <img src={userData?.avatarUrl} alt='User avatar' width='63' height='63' />
+          </div>
+        </Link>
       </li>
       <li className='user-block__item'>
         <Link to='' className='user-block__link' onClick={handleLogoutClick}>

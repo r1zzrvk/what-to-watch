@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
-import { changeFilters } from '../../store/reducers/film-reducer';
+import { changeFilters } from '../../store/reducers/film-reducer/film-reducer';
 import { getGenre } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
 import { generateGenres } from '../../utils/genres';

@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../api/api';
-import { appReducer } from './reducers/app-reducer';
-import { filmReducer } from './reducers/film-reducer';
+import { appReducer } from './reducers/app-reducer/app-reducer';
+import { filmReducer } from './reducers/film-reducer/film-reducer';
 import { redirect } from './middleware/redirect';
-import { reviewReducer } from './reducers/review-reducer';
+import { reviewReducer } from './reducers/review-reducer/review-reducer';
 
 export const api = createAPI();
 
