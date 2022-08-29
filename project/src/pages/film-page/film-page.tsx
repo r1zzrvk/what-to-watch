@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { AddToFavorites } from '../../components/add-to-favorites/add-to-favorites';
 import { FilmCard } from '../../components/film-card/film-card';
 import { FilmTabs } from '../../components/film-tabs/film-tabs';
@@ -10,16 +10,18 @@ import { Header } from '../../components/ui/header/header';
 import { Loader } from '../../components/ui/loader/loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { fetchFilm, fetchSimilarFilms } from '../../store/api-actions/film-actions/film';
-import { getFilm, getFilmLoading, getSimilarFilms } from '../../store/selectors/film';
+import { getFilm, getFilmLoading, getFilms, getSimilarFilms } from '../../store/selectors/film';
 import { TFilm } from '../../types/film';
+import { existingId } from '../../utils/common';
 
 export const FilmPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const film = useAppSelector(getFilm);
+  const films = useAppSelector(getFilms);
   const similarFilms = useAppSelector(getSimilarFilms);
   const isLoading = useAppSelector(getFilmLoading);
-
+  const isIdExist = existingId(films,Number(params.id));
   const [, setFilmId] = useState<number | null>(null);
 
   const filtredSimilarFilms = similarFilms.slice(0, 4).filter((item) => item.id !== film?.id);
@@ -33,10 +35,13 @@ export const FilmPage = () => {
     dispatch(fetchSimilarFilms(params.id));
   }, [params.id, dispatch]);
 
+  if (!isIdExist) {
+    return <Navigate to={'*'} />;
+  }
+
   if (!film) {
     return null;
   }
-
   return (
     <div>
       <section className="film-card film-card--full">

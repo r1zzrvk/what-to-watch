@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns';
+import { TFilm } from '../types/film';
 
 export const convertMinutes = (mins: number) => {
   const hours = Math.trunc(mins / 60);
@@ -43,3 +44,5 @@ export const getRatingStatus = (rating: number) => {
 };
 
 export const convertDateFormat = (date: string) => format(parseISO(date), 'MMMM d, yyyy');
+
+export const existingId = (films: TFilm[], id: number) => films.some((film) => film.id === id);

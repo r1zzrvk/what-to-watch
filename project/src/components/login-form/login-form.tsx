@@ -12,12 +12,14 @@ export const LoginForm = () => {
     e.preventDefault();
 
     if (loginRef.current && passwordRef.current) {
-      const authData: TAuthData = {
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      };
+      if (passwordRef.current.value.match(/\d+\w+/)) {
+        const authData: TAuthData = {
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        };
 
-      dispatch(loginIn(authData));
+        dispatch(loginIn(authData));
+      }
     }
   };
 

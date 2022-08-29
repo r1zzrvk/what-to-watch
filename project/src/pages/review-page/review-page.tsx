@@ -1,12 +1,20 @@
 import { Logo } from '../../components/ui/logo/logo';
 import { ReviewForm } from '../../components/review-form/review-form';
 import { UserBlock } from '../../components/ui/user-block/user-block';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux-hooks';
-import { getFilm } from '../../store/selectors/film';
+import { getFilm, getFilms } from '../../store/selectors/film';
+import { existingId } from '../../utils/common';
 
 export const ReviewPage = () => {
+  const params = useParams();
   const film = useAppSelector(getFilm);
+  const films = useAppSelector(getFilms);
+  const isIdExist = existingId(films,Number(params.id));
+
+  if (!isIdExist) {
+    return <Navigate to={'*'} />;
+  }
 
   if (!film) {
     return null;

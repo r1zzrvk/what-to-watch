@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { ExitButton } from '../../components/player-controls/exit-button/exit-button';
 import { FullscreenButton } from '../../components/player-controls/fullscreen-button/fullscreen-button';
 import { PlayButton } from '../../components/player-controls/play-button/play-button';
@@ -7,15 +7,18 @@ import { ProgressBar } from '../../components/player-controls/progress-bar/progr
 import { Videoplayer } from '../../components/videoplayer/videoplayer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { fetchFilm } from '../../store/api-actions/film-actions/film';
-import { getFilm } from '../../store/selectors/film';
+import { getFilm, getFilms } from '../../store/selectors/film';
+import { existingId } from '../../utils/common';
 
 export const PlayerPage = () => {
   const film = useAppSelector(getFilm);
+  const films = useAppSelector(getFilms);
   const dispatch = useAppDispatch();
   const params = useParams();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const isIdExist = existingId(films,Number(params.id));
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
@@ -26,6 +29,10 @@ export const PlayerPage = () => {
   useEffect(() => {
     dispatch(fetchFilm(params.id));
   }, [params.id, dispatch]);
+
+  if (!isIdExist) {
+    return <Navigate to={'*'} />;
+  }
 
   if (!film) {
     return null;
