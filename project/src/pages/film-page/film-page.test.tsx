@@ -19,7 +19,7 @@ const film = makeFakeFilm();
 
 const store = mockStore({
   app: {
-    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    authorizationStatus: AuthorizationStatus.AUTH,
     userData: null,
     favoriteFilms: films,
     isLoading: false,

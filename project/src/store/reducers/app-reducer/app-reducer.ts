@@ -5,7 +5,7 @@ import { TAppState } from '../../../types/state';
 import { TUserData } from '../../../types/user';
 
 const initialState: TAppState = {
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  authorizationStatus: AuthorizationStatus.AUTH,
   userData: null,
   favoriteFilms: [],
   isLoading: false,

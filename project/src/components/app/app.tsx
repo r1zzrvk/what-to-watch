@@ -17,7 +17,7 @@ import { PrivateRoute } from '../private-route/private-route';
 export const App = () => {
   const dispatch = useAppDispatch();
 
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(setUserData(getUser()));
   }, [dispatch]);
 
