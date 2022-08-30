@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ExitButton } from '../../components/player-controls/exit-button/exit-button';
 import { FullscreenButton } from '../../components/player-controls/fullscreen-button/fullscreen-button';
 import { PlayButton } from '../../components/player-controls/play-button/play-button';
@@ -15,6 +15,7 @@ export const PlayerPage = () => {
   const films = useAppSelector(getFilms);
   const dispatch = useAppDispatch();
   const params = useParams();
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -28,11 +29,12 @@ export const PlayerPage = () => {
 
   useEffect(() => {
     dispatch(fetchFilm(params.id));
-  }, [params.id, dispatch]);
 
-  if (!isIdExist) {
-    return <Navigate to={'*'} />;
-  }
+    if (!isIdExist) {
+      return navigate('/*');
+    }
+
+  }, [params.id, dispatch, isIdExist, navigate]);
 
   if (!film) {
     return null;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AddToFavorites } from '../../components/add-to-favorites/add-to-favorites';
 import { FilmCard } from '../../components/film-card/film-card';
 import { FilmTabs } from '../../components/film-tabs/film-tabs';
@@ -16,6 +16,7 @@ import { existingId } from '../../utils/common';
 
 export const FilmPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const film = useAppSelector(getFilm);
   const films = useAppSelector(getFilms);
@@ -33,11 +34,12 @@ export const FilmPage = () => {
   useEffect(() => {
     dispatch(fetchFilm(params.id));
     dispatch(fetchSimilarFilms(params.id));
-  }, [params.id, dispatch]);
 
-  if (!isIdExist) {
-    return <Navigate to={'*'} />;
-  }
+    if (!isIdExist) {
+      return navigate('/*');
+    }
+
+  }, [params.id, dispatch, isIdExist, navigate]);
 
   if (!film) {
     return null;

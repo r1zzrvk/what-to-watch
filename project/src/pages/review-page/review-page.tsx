@@ -1,20 +1,30 @@
 import { Logo } from '../../components/ui/logo/logo';
 import { ReviewForm } from '../../components/review-form/review-form';
 import { UserBlock } from '../../components/ui/user-block/user-block';
-import { Link, Navigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux-hooks';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { getFilm, getFilms } from '../../store/selectors/film';
 import { existingId } from '../../utils/common';
+import { useEffect } from 'react';
+import { fetchFilm, fetchFilms } from '../../store/api-actions/film-actions/film';
 
 export const ReviewPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const film = useAppSelector(getFilm);
   const films = useAppSelector(getFilms);
   const isIdExist = existingId(films,Number(params.id));
 
-  if (!isIdExist) {
-    return <Navigate to={'*'} />;
-  }
+  useEffect(() => {
+    dispatch(fetchFilm(params.id));
+    dispatch(fetchFilms());
+
+    if (!isIdExist) {
+      return navigate('/*');
+    }
+
+  }, [params.id, dispatch, isIdExist, navigate]);
 
   if (!film) {
     return null;
