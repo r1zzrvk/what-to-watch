@@ -4,7 +4,7 @@ import { AuthorizationStatus } from '../../../constants/auth';
 
 describe('Reducer: App', () => {
   const state = {
-    authorizationStatus: AuthorizationStatus.UNKNOWN,
+    authorizationStatus: AuthorizationStatus.AUTH,
     userData: null,
     isLoading: false,
     favoriteFilms: [],

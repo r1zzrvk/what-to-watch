@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthorizationStatus } from '../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { changeFavoriteFilmStatus, fetchFavorites } from '../../store/api-actions/app-actions/app';
-import { getFavoriteFilms } from '../../store/selectors/app';
+import { getAuthorizationStatus, getFavoriteFilms } from '../../store/selectors/app';
 
 type TAddToFavoritesProps = {
   id: string
@@ -9,11 +11,16 @@ type TAddToFavoritesProps = {
 
 export const AddToFavorites = ({ id }: TAddToFavoritesProps) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const films = useAppSelector(getFavoriteFilms);
   const isFavorite = films.some((film) => String(film.id) === id);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const handleClick = () => {
-    dispatch(changeFavoriteFilmStatus({id, status: isFavorite ? '0' : '1'}));
+    if(authorizationStatus === AuthorizationStatus.AUTH) {
+      dispatch(changeFavoriteFilmStatus({id, status: isFavorite ? '0' : '1'}));
+    } else {
+      return navigate('/login');
+    }
   };
 
   useEffect(() => {

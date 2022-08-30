@@ -74,16 +74,14 @@ export const fetchFavorites = createAsyncThunk<void, undefined, {
 );
 
 export const changeFavoriteFilmStatus = createAsyncThunk<void, {id: string, status: string},{
-  dispatch: AppDispatch,
   state: RootState,
   extra: AxiosInstance
 }>(
   'app/changeFavoriteFilmStatus',
-  async ({id, status}, {dispatch, extra: api }) => {
+  async ({id, status}, { extra: api }) => {
     try {
       await api.post(`/favorite/${id}/${status}`);
     } catch (e) {
-      dispatch(redirectToRoute('*'));
       throw new Error(String(e));
     }
   }

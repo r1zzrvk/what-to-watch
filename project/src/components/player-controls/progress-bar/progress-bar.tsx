@@ -4,9 +4,10 @@ import { convertPlayerTime, playerTimeTemplate } from '../../../utils/common';
 type TProgressBarProps = {
   progress: number
   videoRef: RefObject<HTMLVideoElement>
+  isPlaying: boolean
 }
 
-export const ProgressBar = ({ progress, videoRef }: TProgressBarProps) => {
+export const ProgressBar = ({ progress, videoRef, isPlaying }: TProgressBarProps) => {
   const convertedTimeleft = convertPlayerTime(Number(videoRef.current?.duration) - Number(videoRef.current?.currentTime));
 
   return (
@@ -16,7 +17,9 @@ export const ProgressBar = ({ progress, videoRef }: TProgressBarProps) => {
         <div className="player__toggler" style={{ left: `${progress}%` }}>Toggler</div>
       </div>
       <div className="player__time-value">
-        {playerTimeTemplate(convertedTimeleft.hours, convertedTimeleft.minutes, convertedTimeleft.seconds)}
+        {isPlaying
+          ? playerTimeTemplate(convertedTimeleft.hours, convertedTimeleft.minutes, convertedTimeleft.seconds)
+          : '00:00:00'}
       </div>
     </div>
   );

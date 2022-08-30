@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TFilm } from '../../types/film';
 
 type TFilmCardProps = {
@@ -63,7 +63,7 @@ export const FilmCard = ({ film, onMouseOver }: TFilmCardProps) => {
         }
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link className="small-film-card__link" to='#'>{name}</Link>
       </h3>
     </article>
   );

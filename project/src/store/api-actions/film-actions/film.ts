@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { RootState } from '../..';
+import { AppDispatch, RootState } from '../..';
 import { TFilm } from '../../../types/film';
+import { redirectToRoute } from '../../actions/actions';
 
 export const fetchFilms = createAsyncThunk<TFilm[], undefined, {
   state: RootState,
@@ -19,15 +20,17 @@ export const fetchFilms = createAsyncThunk<TFilm[], undefined, {
 );
 
 export const fetchFilm = createAsyncThunk<TFilm, string | undefined, {
+  dispatch: AppDispatch,
   state: RootState,
   extra: AxiosInstance
 }>(
   'film/fetchFilm',
-  async (id, { extra: api }) => {
+  async (id, { dispatch,extra: api }) => {
     try {
       const { data } = await api.get<TFilm>(`/films/${id}`);
       return data;
     } catch (e) {
+      dispatch(redirectToRoute('*'));
       throw new Error(String(e));
     }
   },
