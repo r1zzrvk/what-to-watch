@@ -12,7 +12,7 @@ export const LoginForm = () => {
     e.preventDefault();
 
     if (loginRef.current && passwordRef.current) {
-      if (passwordRef.current.value.match(/\d+\w+/)) {
+      if (passwordRef.current.value.match(/(\d.*[A-Za-z].*)|([A-Za-z].*\d.*)+/i)) {
         const authData: TAuthData = {
           login: loginRef.current.value,
           password: passwordRef.current.value,

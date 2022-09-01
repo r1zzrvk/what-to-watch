@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../constants/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
@@ -17,15 +16,11 @@ export const AddToFavorites = ({ id }: TAddToFavoritesProps) => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const handleClick = () => {
     if(authorizationStatus === AuthorizationStatus.AUTH) {
-      dispatch(changeFavoriteFilmStatus({id, status: isFavorite ? '0' : '1'}));
+      dispatch(changeFavoriteFilmStatus({id, status: isFavorite ? '0' : '1'})).then(() => dispatch(fetchFavorites()));
     } else {
       return navigate('/login');
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchFavorites());
-  },[dispatch, id, films]);
 
   return (
     <button className="btn btn--list film-card__button" type="button" onClick={handleClick}>

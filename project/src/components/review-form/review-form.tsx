@@ -22,7 +22,7 @@ export const ReviewForm = ({ id }: TReviewFormProps) => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isSubmitting = useAppSelector(getReviewsLoading);
 
-  const onReviewInputChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleReviewInputChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(target.value);
   };
   const handleSubmit = (e: FormEvent) => {
@@ -42,7 +42,7 @@ export const ReviewForm = ({ id }: TReviewFormProps) => {
         </div>
       </div>
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={onReviewInputChange} value={comment} disabled={isSubmitting}></textarea>
+        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={handleReviewInputChange} value={comment} disabled={isSubmitting}></textarea>
         <div className="add-review__submit">
           {authorizationStatus === AuthorizationStatus.NO_AUTH || <button className="add-review__btn" type='submit' disabled={isDisabled || isSubmitting}>Post</button>}
         </div>
