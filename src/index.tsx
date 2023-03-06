@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { checkAuth } from './store/api-actions/app-actions/app';
 import { fetchFilms } from './store/api-actions/film-actions/film';
+import './main.css';
+import './main.min.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
